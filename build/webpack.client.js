@@ -12,7 +12,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const defaultPlugins = [
   new HtmlPlugin({
-    title: 'SimonTodo'
+    template: path.join(__dirname, 'template.html')
   }),
   new VueLoaderPlugin()
 ]
@@ -49,12 +49,16 @@ if (isDev) {
       },
       runtimeChunk: true
     },
-    devtool: 'cheap-module-eval-source-map',
+    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-eval-source-map',
     devServer: {
-      contentBase: path.join(__dirname, '../dist'),
+      contentBase: path.join(__dirname, '../public'),
       port: 8000,
       hot: true,
-      open: true
+      open: true,
+      historyApiFallback: {
+        index: '/public/index.html'
+      }
       // overlay: {
       //   errors: true
       // }

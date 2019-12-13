@@ -10,14 +10,11 @@ const config = {
   },
   output: {
     filename: '[name].[hash:8].js',
-    path: path.join(__dirname, '../dist')
+    path: path.join(__dirname, '../public'),
+    publicPath: '/public/'
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.vue', '.css', '.styl'],
-    alias: {
-      // three: path.resolve(__dirname, '../third/three.min.js')
-      three: '../node_modules/three/build/three.js'
-    }
+    extensions: ['.js', '.jsx', '.vue', '.css', '.styl']
   },
   module: {
     rules: [
