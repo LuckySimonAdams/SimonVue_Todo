@@ -1,46 +1,61 @@
 <template>
   <section class="real-app">
+    <div class="tab-container">
+      <tabs
+        :value="filter"
+        @change="handleChangeTab"
+      >
+        <tab
+          v-for="tab in stats"
+          :key="tab"
+          :label="tab"
+          :index="tab"
+        />
+      </tabs>
+    </div>
     <input
       type="text"
       class="add-input"
       placeholder="add todo item"
       autofocus
-      @keyup.enter="addTodo"
+      @keyup.enter="handleAdd"
     >
     <Item
-      :todo="todo"
       v-for="todo in filteredTodos"
       :key="todo.id"
+      :todo="todo"
       @del="deleteTodo"
+      @toggle="toggleTodoState"
     />
-    <Tabs
+    <Helper
       :filter="filter"
       :todos="todos"
-      @toggle="toggleFilter"
       @clearAllCompleted="clearAllCompleted"
     />
   </section>
 </template>
 
 <script>
+// import { mapState, mapActions } from 'vuex'
 import Item from './item.vue'
-import Tabs from './tabs.vue'
+import Helper from './helper.vue'
 
 let id = 0
 
 export default {
+  metaInfo: {
+    title: 'The Todo App'
+  },
   components: {
     Item,
-    Tabs
+    Helper
   },
-
   data () {
     return {
-      todos: [],
-      filter: 'all'
+      filter: 'all',
+      stats: ['all', 'active', 'completed']
     }
   },
-
   computed: {
     filteredTodos () {
       if (this.filter === 'all') {
@@ -50,7 +65,6 @@ export default {
       return this.todos.filter(todo => todo.completed === completed)
     }
   },
-
   methods: {
     addTodo (e) {
       this.todos.unshift({
@@ -60,15 +74,12 @@ export default {
       })
       e.target.value = ''
     },
-
     deleteTodo (id) {
       this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
     },
-
     toggleFilter (state) {
       this.filter = state
     },
-
     clearAllCompleted () {
       this.todos = this.todos.filter(todo => !todo.completed)
     }

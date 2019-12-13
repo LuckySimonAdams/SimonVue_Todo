@@ -1,11 +1,10 @@
 <template>
-  <div
-    :class="['todo-item', todo.completed ? 'completed' : '']"
-  >
+  <div :class="['todo-item', todo.completed ? 'completed' : '']">
     <input
-      v-model="todo.completed"
-      type="text"
+      type="checkbox"
       class="toggle"
+      :checked="todo.completed"
+      @click="handleToggle"
     >
     <label>{{ todo.content }}</label>
     <button
@@ -25,6 +24,11 @@ export default {
   },
 
   methods: {
+    handleToggle (e) {
+      e.preventDefault()
+      this.$emit('toggle', this.todo)
+    },
+
     deleteTodo () {
       this.$emit('del', this.todo.id)
     }
@@ -40,7 +44,7 @@ export default {
   font-size 24px
   &:hover {
     .destroy:after {
-      content 'x'
+      content '×'
     }
   }
   label {
