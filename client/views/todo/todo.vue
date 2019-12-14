@@ -36,11 +36,9 @@
 </template>
 
 <script>
-// import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import Item from './item.vue'
 import Helper from './helper.vue'
-
-let id = 0
 
 export default {
   metaInfo: {
@@ -57,6 +55,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['todos']),
     filteredTodos () {
       if (this.filter === 'all') {
         return this.todos
@@ -65,18 +64,41 @@ export default {
       return this.todos.filter(todo => todo.completed === completed)
     }
   },
+  // beforeRouteEnter (to, from, next) {
+  //   next(vm => {
+  //     console.log('after enter vm.id is ', vm.id)
+  //   })
+  // },
+  // beforeRouteUpdate (to, from, next) {
+  //   next()
+  // },
+  // beforeRouteLeave (to, from, next) {
+  //   next()
+  // },
+  mounted () {
+    // if (this.todos && this.todos.length < 1) {
+    //   this.fetchTodos()
+    // }
+  },
   methods: {
-    addTodo (e) {
-      this.todos.unshift({
-        id: id++,
-        content: e.target.value.trim(),
+    handleAdd (e) {
+      const content = e.target.value.trim()
+      if (!content) {
+        this.$notify({
+          content: '必须输入要做的内容'
+        })
+        return
+      }
+      const todo = {
+        content,
         completed: false
-      })
+      }
+      this.addTodo(todo)
       e.target.value = ''
     },
-    deleteTodo (id) {
-      this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
-    },
+    // deleteTodo (id) {
+    //   this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
+    // },
     toggleFilter (state) {
       this.filter = state
     },
