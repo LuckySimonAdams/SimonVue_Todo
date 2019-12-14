@@ -10,18 +10,23 @@ const config = {
   },
   output: {
     filename: '[name].[hash:8].js',
-    path: path.join(__dirname, '../public'),
-    publicPath: '/public/'
+    // chunkFilename: '[name].[chunkhash:8].chunk.js',
+    path: path.join(__dirname, '../dist')
   },
   resolve: {
     extensions: ['.js', '.jsx', '.vue', '.css', '.styl']
   },
+  // 使用第三方库
+  // externals: {
+  //   three: 'THREE',
+  //   cesium: 'Cesium'
+  // },
   module: {
     rules: [
       {
         test: /\.(vue|js|jsx)$/,
         loader: 'eslint-loader',
-        exclude: [/node_modules/, /dist/, /third/],
+        exclude: [/node_modules|dist|third/],
         enforce: 'pre' // 预处理
       },
       {

@@ -8,6 +8,12 @@ import './assets/styles/global.styl'
 import createRouter from './router/router'
 import createStore from './store/store'
 
+// 使用本地的第三方库。注意：不能使用import
+// const THREE = require('three')
+// const Cesium = require('cesium')
+// console.log(THREE)
+// console.log(Cesium)
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
