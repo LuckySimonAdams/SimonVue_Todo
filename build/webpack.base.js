@@ -6,12 +6,14 @@ const config = {
   target: 'web',
   mode: process.env.NODE_ENV || 'production',
   entry: {
-    app: path.join(__dirname, '../client/index.js')
+    // app: path.join(__dirname, '../client/index.js')
+    app: path.join(__dirname, '../client/client-entry.js')
   },
   output: {
     filename: '[name].[hash:8].js',
     // chunkFilename: '[name].[chunkhash:8].chunk.js',
-    path: path.join(__dirname, '../dist')
+    path: path.join(__dirname, '../dist'),
+    publicPath: 'http://127.0.0.1:8000/dist/'
   },
   resolve: {
     extensions: ['.js', '.jsx', '.vue', '.css', '.styl']
@@ -26,7 +28,7 @@ const config = {
       {
         test: /\.(vue|js|jsx)$/,
         loader: 'eslint-loader',
-        exclude: [/node_modules|dist|third/],
+        exclude: [/node_modules/, /dist/, /third/],
         enforce: 'pre' // 预处理
       },
       {

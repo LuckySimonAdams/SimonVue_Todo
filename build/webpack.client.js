@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlPlugin = require('html-webpack-plugin')
 // const HtmlTagsPlugin = require('html-webpack-tags-plugin')
 // const CopyPlugin = require('copy-webpack-plugin')
@@ -9,10 +8,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin')
 const baseConfig = require('./webpack.base')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueClientPlugin = require('vue-server-renderer/client-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
 const defaultPlugins = [
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: isDev ? '"development"' : '"production"'
+    }
+  }),
   new HtmlPlugin({
     template: path.join(__dirname, 'template.html')
   }),
@@ -31,7 +37,8 @@ const defaultPlugins = [
   // new webpack.DefinePlugin({
   //   CESIUM_BASE_URL: JSON.stringify('third/cesium_1.61')
   // }),
-  new VueLoaderPlugin()
+  new VueLoaderPlugin(),
+  new VueClientPlugin()
 ]
 
 let config
@@ -71,37 +78,34 @@ if (isDev) {
     devtool: 'cheap-eval-source-map',
     devServer: {
       contentBase: path.join(__dirname, '../dist'),
+      host: '0.0.0.0',
       port: 8000,
+      // open: true,
       hot: true,
-      open: true,
+      headers: { 'Access-Control-Allow-Origin': '*' },
       historyApiFallback: {
-        index: 'index.html'
+        index: '/dist/index.html' // TODO 待验证
+      },
+      overlay: {
+        errors: true
       }
-      // overlay: {
-      //   errors: true
-      // }
     }
   })
 } else {
   config = merge(baseConfig, {
     output: {
-      filename: '[name].js',
-      libraryTarget: 'commonjs2'
+      filename: '[name].js'
+      // publicPath: '/dist/' // TODO 待验证
     },
     module: {
       rules: [
         {
           test: /\.styl/,
           use: [
-            'vue-style-loader',
+            // 'vue-style-loader',
             MiniCssExtractPlugin.loader,
             'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
-            },
+            'postcss-loader',
             'stylus-loader'
           ]
         }
