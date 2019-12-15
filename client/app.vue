@@ -5,7 +5,7 @@
       v-show="loading"
       id="loading"
     >
-      <Loading />
+      <loading />
     </div>
     <Header />
     <transition

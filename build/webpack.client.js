@@ -77,7 +77,7 @@ if (isDev) {
     // devtool: 'cheap-module-eval-source-map',
     devtool: 'cheap-eval-source-map',
     devServer: {
-      contentBase: path.join(__dirname, '../dist'),
+      // contentBase: path.join(__dirname, '../dist'), // 使用publicPath就关闭此选项，否则会出错
       host: '0.0.0.0',
       port: 8000,
       // open: true,

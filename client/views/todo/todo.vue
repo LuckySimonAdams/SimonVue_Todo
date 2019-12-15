@@ -16,7 +16,7 @@
     <input
       type="text"
       class="add-input"
-      placeholder="add todo item"
+      placeholder="添加 todo list"
       autofocus
       @keyup.enter="handleAdd"
     >
@@ -85,7 +85,7 @@ export default {
       const content = e.target.value.trim()
       if (!content) {
         this.$notify({
-          content: '必须输入要做的内容'
+          content: '内容不能为空'
         })
         return
       }
@@ -104,6 +104,9 @@ export default {
     },
     clearAllCompleted () {
       this.todos = this.todos.filter(todo => !todo.completed)
+    },
+    handleChangeTab (value) {
+      this.filter = value
     }
   }
 }
@@ -135,4 +138,7 @@ export default {
   border none
   box-shadow inset 0 -2px 1px rgba(0, 0, 0, 0.03)
 }
+.tab-container
+  background-color #fff
+  padding 0 15px
 </style>
