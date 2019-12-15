@@ -30,13 +30,13 @@
     <Helper
       :filter="filter"
       :todos="todos"
-      @clearAllCompleted="clearAllCompleted"
+      @clearAllCompleted="deleteAllCompleted"
     />
   </section>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Item from './item.vue'
 import Helper from './helper.vue'
 
@@ -76,11 +76,18 @@ export default {
   //   next()
   // },
   mounted () {
-    // if (this.todos && this.todos.length < 1) {
-    //   this.fetchTodos()
-    // }
+    if (this.todos && this.todos.length < 1) {
+      this.getAllTodos()
+    }
   },
   methods: {
+    ...mapActions([
+      'getAllTodos',
+      'addTodo',
+      'updateTodo',
+      'deleteTodo',
+      'deleteAllCompleted'
+    ]),
     handleAdd (e) {
       const content = e.target.value.trim()
       if (!content) {
@@ -96,11 +103,13 @@ export default {
       this.addTodo(todo)
       e.target.value = ''
     },
-    // deleteTodo (id) {
-    //   this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
-    // },
-    toggleFilter (state) {
-      this.filter = state
+    toggleTodoState (todo) {
+      this.updateTodo({
+        id: todo.id,
+        todo: Object.assign({}, todo, {
+          completed: !todo.completed
+        })
+      })
     },
     clearAllCompleted () {
       this.todos = this.todos.filter(todo => !todo.completed)

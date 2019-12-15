@@ -13,7 +13,8 @@ const config = {
     filename: '[name].[hash:8].js',
     // chunkFilename: '[name].[chunkhash:8].chunk.js',
     path: path.join(__dirname, '../dist'),
-    publicPath: 'http://127.0.0.1:8000/dist/'
+    publicPath: '/dist/'
+    // publicPath: 'http://127.0.0.1:8000/dist/'
   },
   resolve: {
     extensions: ['.js', '.jsx', '.vue', '.css', '.styl']

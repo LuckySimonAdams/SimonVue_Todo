@@ -20,7 +20,7 @@
     >
     <input
       v-model="password"
-      type="text"
+      type="password"
       class="login-input"
       placeholder="Password"
       autocomplete="new-password"
@@ -41,7 +41,6 @@ export default {
   metaInfo: {
     title: 'Login Page'
   },
-
   data () {
     return {
       username: '',
@@ -49,15 +48,19 @@ export default {
       errorMsg: ''
     }
   },
-
   methods: {
     ...mapActions(['login']),
-
     doSubmit (e) {
       e.preventDefault()
-      // if (this.vali)
+      if (this.validate()) {
+        this.login({
+          username: this.username,
+          password: this.password
+        }).then(() => {
+          this.$router.replace('/app')
+        })
+      }
     },
-
     validate () {
       if (!this.username.trim()) {
         this.errorMsg = '姓名不能为空'

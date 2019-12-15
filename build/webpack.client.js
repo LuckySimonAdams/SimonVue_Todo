@@ -82,12 +82,16 @@ if (isDev) {
       port: 8000,
       // open: true,
       hot: true,
+      overlay: {
+        errors: true
+      },
       headers: { 'Access-Control-Allow-Origin': '*' },
       historyApiFallback: {
         index: '/dist/index.html' // TODO 待验证
       },
-      overlay: {
-        errors: true
+      proxy: {
+        '/api': 'http://127.0.0.1:3333',
+        '/user': 'http://127.0.0.1:3333'
       }
     }
   })
@@ -95,7 +99,8 @@ if (isDev) {
   config = merge(baseConfig, {
     output: {
       filename: '[name].js'
-      // publicPath: '/dist/' // TODO 待验证
+      // publicPath: '/dist/'
+      // publicPath: 'http://p4t4vcu10.bkt.clouddn.com/' // 服务器地址
     },
     module: {
       rules: [
@@ -136,5 +141,11 @@ if (isDev) {
     }
   })
 }
+
+// config.resolve = {
+//   alias: {
+//     model: path.join(__dirname, '../client/model/client-model.js')
+//   }
+// }
 
 module.exports = config

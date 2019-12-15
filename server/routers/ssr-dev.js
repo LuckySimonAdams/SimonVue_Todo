@@ -44,7 +44,7 @@ const handleSSR = async ctx => {
   await serverRender(ctx, renderer, template)
 }
 
-const router = new Router()
-router.get('*', handleSSR)
+const pageRouter = new Router()
+pageRouter.get('*', handleSSR)
 
-module.exports = router
+module.exports = pageRouter

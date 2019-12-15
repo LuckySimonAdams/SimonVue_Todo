@@ -10,7 +10,9 @@
     <button
       class="destroy"
       @click="deleteTodo"
-    />
+    >
+      ×
+    </button>
   </div>
 </template>
 
@@ -22,13 +24,11 @@ export default {
       required: true
     }
   },
-
   methods: {
     handleToggle (e) {
       e.preventDefault()
       this.$emit('toggle', this.todo)
     },
-
     deleteTodo () {
       this.$emit('del', this.todo.id)
     }
@@ -37,42 +37,42 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.todo-item {
+.todo-item{
   position relative
-  background-color #ffffff
-  border-bottom 1px solid rgba(0, 0, 0, 0.06)
+  background-color #fff
   font-size 24px
-  &:hover {
-    .destroy:after {
-      content '×'
+  border-bottom 1px solid rgba(0,0,0,0.06)
+  &:hover{
+    .destory:after{
+      content: '×'
     }
   }
-  label {
-    display block
-    margin-left 45px
-    padding 15px 60px 15px 15px
-    line-height 1.2
-    white-space pre-line
-    word-break break-all
-    transition color 0.4s
+  label{
+    white-space: pre-line;
+    word-break: break-all;
+    padding: 15px 60px 15px 15px;
+    margin-left: 45px;
+    display: block;
+    line-height: 1.2;
+    transition: color 0.4s;
   }
-  &.completed {
-    label {
-      color #d9d9d9
+  &.completed{
+    label{
+      color: #d9d9d9;
       text-decoration line-through
     }
   }
 }
-.toggle {
-  text-align center
-  width 40px
-  height 40px
-  position absolute
-  top 0
-  bottom 0
-  margin auto 0
-  border none
-  appearance none
+.toggle{
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  border: none;
+  appearance: none;
   outline none
   &:after{
     content url('../../assets/images/round.svg')
@@ -81,18 +81,18 @@ export default {
     content url('../../assets/images/done.svg')
   }
 }
-.destory{
-  position absolute
-  top 0
-  right 10px
-  bottom 0
-  width 40px
-  height 40px
-  margin auto 0
-  font-size 30px
-  color #cc9a9a
-  margin-bottom 11px
-  transition color 0.2s ease-out;
+.destroy{
+  position: absolute;
+  top: 0;
+  right: 10px;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  margin: auto 0;
+  font-size: 30px;
+  color: #cc9a9a;
+  margin-bottom: 11px;
+  transition: color 0.2s ease-out;
   background-color transparent
   appearance none
   border-width 0

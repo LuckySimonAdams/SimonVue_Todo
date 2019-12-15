@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const baseConfig = require('./webpack.base')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
@@ -9,9 +9,9 @@ const VueServerPlugin = require('vue-server-renderer/server-plugin')
 const isDev = process.env.NODE_ENV === 'development'
 
 const plugins = [
-  new MiniCssExtractPlugin({
-    filename: '[name].css'
-  }),
+  // new MiniCssExtractPlugin({
+  //   filename: '[name].css'
+  // }),
   new VueLoaderPlugin(),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -31,6 +31,11 @@ module.exports = merge(baseConfig, {
     path: path.join(__dirname, '../server-build'),
     libraryTarget: 'commonjs2'
   },
+  // resolve: {
+  //   alias: {
+  //     model: path.join(__dirname, '../client/model/server-model.js')
+  //   }
+  // },
   externals: Object.keys(require('../package.json').dependencies),
   module: {
     rules: [
@@ -40,17 +45,12 @@ module.exports = merge(baseConfig, {
           'vue-style-loader',
           // MiniCssExtractPlugin.loader, // NOTE: 服务端渲染不要使用这个，否则会报错：document is not undefined
           'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          },
+          'postcss-loader',
           'stylus-loader'
         ]
       }
     ]
   },
   plugins,
-  devtool: 'source-map'
+  devtool: isDev ? 'source-map' : undefined
 })
