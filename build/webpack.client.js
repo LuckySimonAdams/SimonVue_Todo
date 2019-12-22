@@ -138,7 +138,8 @@ if (isDev) {
         // name: 'vendor'
         cacheGroups: {
           vendors: {
-            test: /[\\/]node_modules[\\/]/,
+            // test: /[\\/]node_modules[\\/]/,
+            test: /node_modules/,
             filename: 'vendor.js'
           }
         }
