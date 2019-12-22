@@ -135,7 +135,13 @@ if (isDev) {
       ],
       splitChunks: {
         chunks: 'all',
-        name: 'vendor'
+        // name: 'vendor'
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            filename: 'vendor.js'
+          }
+        }
       }
       // runtimeChunk: true
     }
